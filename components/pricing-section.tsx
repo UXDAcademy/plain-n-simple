@@ -41,7 +41,7 @@ export function PricingSection() {
   return (
     <section
       id="pricing"
-      className="py-20 lg:py-32 px-6 lg:px-10 bg-gradient-to-b from-[#FAFAF9] to-[#F5F3F0]"
+      className="py-20 lg:py-32 px-6 lg:px-10 bg-[#FFF9F2]"
     >
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}

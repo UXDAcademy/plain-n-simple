@@ -38,7 +38,7 @@ const paidFeatures: FeatureItem[] = [
   { label: "AI-powered jargon detection" },
   { label: "Color-coded analysis" },
   { label: "LinkedIn integration" },
-  { label: "Resume-to-Job match", comingSoon: false },
+  { label: "Resume-to-Job match", comingSoon: true },
   { label: "Ghost job detection", comingSoon: true },
   { label: "Compare job analyses", comingSoon: true },
 ]

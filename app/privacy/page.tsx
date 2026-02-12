@@ -2,7 +2,7 @@ import { Navigation } from "@/components/navigation"
 
 export default function PrivacyPage() {
   return (
-    <main className="bg-[#FAFAF9] min-h-screen">
+    <main className="bg-[#FFF9F2] min-h-screen">
       <Navigation />
 
       <article className="max-w-2xl mx-auto px-6 pt-32 pb-24">
@@ -131,12 +131,6 @@ export default function PrivacyPage() {
               </a>
             </p>
           </div>
-          <a
-            href="/"
-            className="text-xs text-[#86868b] hover:text-[#303030] transition-colors"
-          >
-            &larr; Back to home
-          </a>
         </div>
       </div>
     </main>

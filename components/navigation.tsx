@@ -17,13 +17,13 @@ export function Navigation() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-[#FAFAF9]/80 backdrop-blur-xl border-b border-black/5"
+          ? "bg-[#FFF9F2]/80 backdrop-blur-xl border-b border-black/5"
           : "bg-transparent"
       }`}
     >
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2.5">
+        <a href="/" className="flex items-center gap-2.5">
           <img
             src="/app_icon.png"
             alt="Plain n' Simple logo"
