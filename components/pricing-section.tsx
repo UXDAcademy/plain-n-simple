@@ -82,7 +82,7 @@ export function PricingSection() {
               href={freeTier.ctaHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full bg-[#303030] text-white py-4 rounded-xl font-medium hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 active:scale-[0.98]"
+              className="flex items-center justify-center gap-2 w-full bg-blue-500 text-white py-4 rounded-xl font-medium hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/20 hover:bg-blue-600 transition-all duration-200 active:scale-[0.98]"
             >
               <Chrome className="w-5 h-5" />
               {freeTier.cta}

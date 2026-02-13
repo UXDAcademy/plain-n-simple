@@ -57,7 +57,7 @@ export function HeroSection() {
             href="https://buy.stripe.com/00w14n1aAecK5jobCnfjG05"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#303030] text-white px-8 py-3.5 rounded-lg text-base font-medium hover:bg-[#333] hover:shadow-lg transition-all duration-200 active:scale-[0.97]"
+            className="bg-blue-500 text-white px-8 py-3.5 rounded-lg text-base font-medium hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-200 active:scale-[0.97]"
           >
             Pre-Order Today
           </a>

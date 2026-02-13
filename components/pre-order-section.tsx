@@ -197,7 +197,7 @@ export function PreOrderSection() {
                 href="https://buy.stripe.com/00w14n1aAecK5jobCnfjG05"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full text-center py-4 rounded-lg text-sm font-semibold bg-[#303030] text-white hover:bg-[#333] hover:shadow-lg hover:shadow-black/10 transition-all duration-200 active:scale-[0.98]"
+                className="block w-full text-center py-4 rounded-lg text-sm font-semibold bg-blue-500 text-white hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-200 active:scale-[0.98]"
               >
                 Pre-Order for $75{" "}
                 <span className="text-white/40 line-through font-normal ml-1">
@@ -221,9 +221,9 @@ export function PreOrderSection() {
             from var(--beam-angle, 0deg) at 50% 50%,
             transparent 0deg,
             transparent 260deg,
-            #F59E0B 280deg,
-            #FBBF24 300deg,
-            #F59E0B 320deg,
+            #3B82F6 280deg,
+            #60A5FA 300deg,
+            #3B82F6 320deg,
             transparent 340deg,
             transparent 360deg
           );
