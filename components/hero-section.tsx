@@ -12,9 +12,6 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center px-6 pt-16 overflow-hidden">
-      {/* Subtle radial accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#E5C899]/[0.07] rounded-full blur-[120px]" />
-
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         {/* Pill badge */}
         <div
@@ -89,12 +86,12 @@ export function HeroSection() {
             </a>
           </span>
         </div>
-      </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-14 left-1/2 -translate-x-1/2">
-        <div className="w-6 h-10 rounded-full border-2 border-[#575757] flex items-start justify-center pt-2">
-          <div className="w-1 h-2.5 rounded-full bg-[#575757] animate-bounce" />
+        {/* Scroll indicator */}
+        <div className="flex justify-center mt-8">
+          <div className="w-6 h-10 rounded-full border-2 border-[#575757] flex items-start justify-center pt-2">
+            <div className="w-1 h-2.5 rounded-full bg-[#575757] animate-bounce" />
+          </div>
         </div>
       </div>
     </section>
