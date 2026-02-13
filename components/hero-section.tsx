@@ -59,7 +59,7 @@ export function HeroSection() {
             rel="noopener noreferrer"
             className="bg-[#303030] text-white px-8 py-3.5 rounded-lg text-base font-medium hover:bg-[#333] hover:shadow-lg transition-all duration-200 active:scale-[0.97]"
           >
-            Pre-Order for $75/yr
+            Pre-Order Today
           </a>
           <a
             href="#demo"
@@ -88,7 +88,7 @@ export function HeroSection() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-24">
           <div className="w-6 h-10 rounded-full border-2 border-[#575757] flex items-start justify-center pt-2">
             <div className="w-1 h-2.5 rounded-full bg-[#575757] animate-bounce" />
           </div>
