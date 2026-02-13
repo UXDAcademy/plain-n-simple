@@ -151,7 +151,6 @@ export function InteractiveDemo() {
   const [activeDataKey, setActiveDataKey] = useState<string | null>(null)
   const [tooltipStyle, setTooltipStyle] = useState<React.CSSProperties>({})
   const sectionRef = useRef<HTMLDivElement>(null)
-  const jobContentRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
   const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [isInView, setIsInView] = useState(false)
@@ -174,39 +173,44 @@ export function InteractiveDemo() {
     }
   }, [])
 
-  const computeTooltipPosition = useCallback((spanEl: HTMLElement) => {
-    const container = jobContentRef.current
-    if (!container) return
+  // Dismiss tooltip on scroll or resize (fixed tooltip won't follow scroll)
+  useEffect(() => {
+    const dismiss = () => setActiveDataKey(null)
+    window.addEventListener("scroll", dismiss, true)
+    window.addEventListener("resize", dismiss)
+    return () => {
+      window.removeEventListener("scroll", dismiss, true)
+      window.removeEventListener("resize", dismiss)
+    }
+  }, [])
 
+  const computeTooltipPosition = useCallback((spanEl: HTMLElement) => {
     const spanRect = spanEl.getBoundingClientRect()
-    const containerRect = container.getBoundingClientRect()
     const viewportHeight = window.innerHeight
     const estimatedTooltipHeight = 200
 
-    // Left: aligned to the container's left edge (within padding)
-    const left = 0
+    // Left: aligned to the start of the sentence
+    const left = spanRect.left
 
     // Check if tooltip would overflow below viewport
     if (spanRect.bottom + estimatedTooltipHeight + 12 > viewportHeight) {
       // Show above the sentence
-      const top = spanRect.top - containerRect.top - 8
       setTooltipStyle({
-        position: "absolute",
+        position: "fixed",
         left: `${left}px`,
-        top: `${top}px`,
+        top: `${spanRect.top - 8}px`,
         transform: "translateY(-100%)",
-        width: "min(320px, calc(100% - 0px))",
-        zIndex: 100,
+        width: "min(320px, calc(100vw - 48px))",
+        zIndex: 9999,
       })
     } else {
       // Show below the sentence
-      const top = spanRect.bottom - containerRect.top + 8
       setTooltipStyle({
-        position: "absolute",
+        position: "fixed",
         left: `${left}px`,
-        top: `${top}px`,
-        width: "min(320px, calc(100% - 0px))",
-        zIndex: 100,
+        top: `${spanRect.bottom + 8}px`,
+        width: "min(320px, calc(100vw - 48px))",
+        zIndex: 9999,
       })
     }
   }, [])
@@ -375,7 +379,7 @@ export function InteractiveDemo() {
             </div>
 
             {/* Job Description - FULL CONTENT */}
-            <div ref={jobContentRef} className="p-6 lg:p-8 relative text-sm text-gray-700 leading-relaxed space-y-6">
+            <div className="p-6 lg:p-8 relative text-sm text-gray-700 leading-relaxed space-y-6">
               {/* Overview Section */}
               <div>
                 <h4 className="text-sm font-semibold text-gray-900 mb-3">
@@ -529,50 +533,6 @@ export function InteractiveDemo() {
                 </ul>
               </div>
 
-              {/* Single tooltip — rendered once, positioned absolutely */}
-              {activeTooltipData && (
-                <div
-                  ref={tooltipRef}
-                  style={tooltipStyle}
-                  onMouseEnter={handleTooltipMouseEnter}
-                  onMouseLeave={handleTooltipMouseLeave}
-                >
-                  <div className="bg-[#303030] text-white p-4 rounded-xl shadow-2xl border border-white/10">
-                    {/* Phrase */}
-                    <div className="text-[10px] uppercase tracking-wider mb-1.5 text-white/30">
-                      Phrase Detected
-                    </div>
-                    <div className="text-sm font-medium mb-3 text-white/90 leading-snug">
-                      &ldquo;{activeTooltipData.phrase}&rdquo;
-                    </div>
-
-                    {/* Explanation */}
-                    <div className="text-[10px] uppercase tracking-wider mb-1.5 text-white/30">
-                      Real Talk
-                    </div>
-                    <div className="text-sm mb-3 text-white/70 leading-relaxed">
-                      {activeTooltipData.explanation}
-                    </div>
-
-                    {/* Status */}
-                    <div className="flex items-center gap-2 text-xs pt-2 border-t border-white/[0.06]">
-                      <div
-                        className={`w-2.5 h-2.5 rounded-full ${
-                          activeTooltipData.type === "green"
-                            ? "bg-green-400"
-                            : activeTooltipData.type === "yellow"
-                            ? "bg-yellow-400"
-                            : activeTooltipData.type === "orange"
-                            ? "bg-orange-400"
-                            : "bg-red-400"
-                        }`}
-                      />
-                      <span className="text-white/50">{activeTooltipData.label}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
               {/* Loading shimmer overlay */}
               {state === "loading" && (
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer" />
@@ -682,6 +642,50 @@ export function InteractiveDemo() {
             </div>
           </div>
         </div>
+
+        {/* Fixed tooltip — rendered outside card to prevent layout shift */}
+        {activeTooltipData && (
+          <div
+            ref={tooltipRef}
+            style={tooltipStyle}
+            onMouseEnter={handleTooltipMouseEnter}
+            onMouseLeave={handleTooltipMouseLeave}
+          >
+            <div className="bg-[#303030] text-white p-4 rounded-xl shadow-2xl border border-white/10">
+              {/* Phrase */}
+              <div className="text-[10px] uppercase tracking-wider mb-1.5 text-white/30">
+                Phrase Detected
+              </div>
+              <div className="text-sm font-medium mb-3 text-white/90 leading-snug">
+                &ldquo;{activeTooltipData.phrase}&rdquo;
+              </div>
+
+              {/* Explanation */}
+              <div className="text-[10px] uppercase tracking-wider mb-1.5 text-white/30">
+                Real Talk
+              </div>
+              <div className="text-sm mb-3 text-white/70 leading-relaxed">
+                {activeTooltipData.explanation}
+              </div>
+
+              {/* Status */}
+              <div className="flex items-center gap-2 text-xs pt-2 border-t border-white/[0.06]">
+                <div
+                  className={`w-2.5 h-2.5 rounded-full ${
+                    activeTooltipData.type === "green"
+                      ? "bg-green-400"
+                      : activeTooltipData.type === "yellow"
+                      ? "bg-yellow-400"
+                      : activeTooltipData.type === "orange"
+                      ? "bg-orange-400"
+                      : "bg-red-400"
+                  }`}
+                />
+                <span className="text-white/50">{activeTooltipData.label}</span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <style jsx>{`
