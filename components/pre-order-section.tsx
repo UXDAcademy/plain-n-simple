@@ -205,7 +205,7 @@ export function PreOrderSection() {
                 </span>
               </a>
               <p className="text-xs text-[#86868b] text-center mt-3">
-                Secure checkout via Stripe. Cancel anytime.
+                Secure checkout via Stripe.
               </p>
             </div>
           </div>
