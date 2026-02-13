@@ -151,6 +151,7 @@ export function InteractiveDemo() {
   const [activeDataKey, setActiveDataKey] = useState<string | null>(null)
   const [tooltipStyle, setTooltipStyle] = useState<React.CSSProperties>({})
   const sectionRef = useRef<HTMLDivElement>(null)
+  const jobContentRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
   const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [isInView, setIsInView] = useState(false)
@@ -185,12 +186,17 @@ export function InteractiveDemo() {
   }, [])
 
   const computeTooltipPosition = useCallback((spanEl: HTMLElement) => {
+    const container = jobContentRef.current
+    if (!container) return
+
     const spanRect = spanEl.getBoundingClientRect()
+    const containerRect = container.getBoundingClientRect()
     const viewportHeight = window.innerHeight
     const estimatedTooltipHeight = 200
 
-    // Left: aligned to the start of the sentence
-    const left = spanRect.left
+    // Left: always aligned to the card content's left padding edge
+    const paddingLeft = parseFloat(getComputedStyle(container).paddingLeft) || 0
+    const left = containerRect.left + paddingLeft
 
     // Check if tooltip would overflow below viewport
     if (spanRect.bottom + estimatedTooltipHeight + 12 > viewportHeight) {
@@ -364,10 +370,7 @@ export function InteractiveDemo() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <h3 className="font-semibold text-gray-900 text-xl lg:text-2xl mb-1">
-                    Full Stack AI Engineer{" "}
-                    <span className="ml-2 text-sm font-normal text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
-                      REMOTE
-                    </span>
+                    Full Stack AI Engineer
                   </h3>
                   <p className="text-gray-600">RealPage, Inc.</p>
                   <p className="text-gray-500 text-sm flex items-center gap-1 mt-1">
@@ -379,7 +382,7 @@ export function InteractiveDemo() {
             </div>
 
             {/* Job Description - FULL CONTENT */}
-            <div className="p-6 lg:p-8 relative text-sm text-gray-700 leading-relaxed space-y-6">
+            <div ref={jobContentRef} className="p-6 lg:p-8 relative text-sm text-gray-700 leading-relaxed space-y-6">
               {/* Overview Section */}
               <div>
                 <h4 className="text-sm font-semibold text-gray-900 mb-3">

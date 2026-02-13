@@ -170,7 +170,7 @@ export function PreOrderSection() {
                 <h3 className="text-lg font-semibold text-[#303030]">
                   Annual
                 </h3>
-                <span className="text-[10px] font-semibold text-[#F59E0B] bg-[#F59E0B]/10 px-2.5 py-1 rounded-full uppercase tracking-wide border border-[#F59E0B]/20">
+                <span className="text-[10px] font-semibold text-[#92400E] bg-[#F59E0B]/10 px-2.5 py-1 rounded-full uppercase tracking-wide border border-[#F59E0B]/20">
                   Pre-Order Discount
                 </span>
               </div>
