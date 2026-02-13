@@ -13,6 +13,7 @@ const instrumentSerif = Instrument_Serif({
 const crimsonPro = { variable: "--font-crimson-pro" }; // Declaring crimsonPro variable
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://useplainandsimple.app'),
   title: 'Plain n\' Simple: Bullsh*t Job Detector | Job postings in plain English',
   description: 'See what LinkedIn job descriptions really mean before you waste time applying. A Chrome extension that translates corporate jargon into plain English.',
   keywords: ['job posting', 'LinkedIn', 'Chrome extension', 'job search', 'corporate jargon', 'job description translator'],
@@ -21,27 +22,24 @@ export const metadata: Metadata = {
     title: 'Plain n\' Simple: Bullsh*t Job Detector',
     description: 'See what LinkedIn job descriptions really mean before you waste time applying.',
     type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Plain n\' Simple: Bullsh*t Job Detector',
-    description: 'See what LinkedIn job descriptions really mean before you waste time applying.',
-  },
-  icons: {
-    icon: [
+    url: 'https://useplainandsimple.app',
+    images: [
       {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: '/og-image.png',
+        width: 1120,
+        height: 1120,
+        alt: 'Plain n\' Simple app icon',
       },
     ],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Plain n\' Simple: Bullsh*t Job Detector',
+    description: 'See what LinkedIn job descriptions really mean before you waste time applying.',
+    images: ['/og-image.png'],
+  },
+  icons: {
+    icon: '/icon.png',
     apple: '/apple-icon.png',
   },
 }

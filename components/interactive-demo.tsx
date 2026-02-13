@@ -12,11 +12,6 @@ interface TooltipData {
   label: string
 }
 
-interface ActiveTooltip {
-  dataKey: string
-  content: TooltipData
-}
-
 const tooltipData: Record<string, TooltipData> = {
   green1: {
     type: "green",
@@ -153,13 +148,12 @@ export function InteractiveDemo() {
   const [translationsLeft, setTranslationsLeft] = useState(5)
   const [showHighlights, setShowHighlights] = useState(false)
   const [score, setScore] = useState(0)
-  const [activeTooltip, setActiveTooltip] = useState<ActiveTooltip | null>(null)
-  const [tooltipPosition, setTooltipPosition] = useState<"below" | "above">("below")
+  const [activeDataKey, setActiveDataKey] = useState<string | null>(null)
+  const [tooltipStyle, setTooltipStyle] = useState<React.CSSProperties>({})
   const sectionRef = useRef<HTMLDivElement>(null)
-  const jobCardRef = useRef<HTMLDivElement>(null)
+  const jobContentRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
-  const activeSpanRef = useRef<HTMLSpanElement | null>(null)
-  const spanRefs = useRef<Record<string, HTMLSpanElement | null>>({})
+  const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [isInView, setIsInView] = useState(false)
 
   useEffect(() => {
@@ -173,71 +167,91 @@ export function InteractiveDemo() {
     return () => observer.disconnect()
   }, [])
 
-  // Click outside handler to dismiss tooltip
+  // Clean up timer on unmount
   useEffect(() => {
-    if (!activeTooltip) return
-
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as Node
-      // Don't dismiss if clicking on the tooltip itself
-      if (tooltipRef.current?.contains(target)) return
-      // Don't dismiss if clicking on a highlight span (handled by span click)
-      const clickedSpan = (e.target as HTMLElement).closest('[data-highlight-key]')
-      if (clickedSpan) return
-      setActiveTooltip(null)
-      activeSpanRef.current = null
-    }
-
-    // Use a small delay so the click that opened the tooltip doesn't immediately close it
-    const timer = setTimeout(() => {
-      document.addEventListener("click", handleClickOutside)
-    }, 10)
-
     return () => {
-      clearTimeout(timer)
-      document.removeEventListener("click", handleClickOutside)
+      if (dismissTimerRef.current) clearTimeout(dismissTimerRef.current)
     }
-  }, [activeTooltip])
+  }, [])
 
-  // Position the tooltip after it renders
-  useEffect(() => {
-    if (!activeTooltip || !activeSpanRef.current) return
+  const computeTooltipPosition = useCallback((spanEl: HTMLElement) => {
+    const container = jobContentRef.current
+    if (!container) return
 
-    const span = activeSpanRef.current
-    const spanRect = span.getBoundingClientRect()
+    const spanRect = spanEl.getBoundingClientRect()
+    const containerRect = container.getBoundingClientRect()
     const viewportHeight = window.innerHeight
-    const tooltipEstimatedHeight = 200 // rough estimate for flip check
+    const estimatedTooltipHeight = 200
 
-    // If the sentence is near the bottom of the viewport, show above
-    if (spanRect.bottom + tooltipEstimatedHeight + 16 > viewportHeight) {
-      setTooltipPosition("above")
+    // Left: aligned to the container's left edge (within padding)
+    const left = 0
+
+    // Check if tooltip would overflow below viewport
+    if (spanRect.bottom + estimatedTooltipHeight + 12 > viewportHeight) {
+      // Show above the sentence
+      const top = spanRect.top - containerRect.top - 8
+      setTooltipStyle({
+        position: "absolute",
+        left: `${left}px`,
+        top: `${top}px`,
+        transform: "translateY(-100%)",
+        width: "min(320px, calc(100% - 0px))",
+        zIndex: 100,
+      })
     } else {
-      setTooltipPosition("below")
+      // Show below the sentence
+      const top = spanRect.bottom - containerRect.top + 8
+      setTooltipStyle({
+        position: "absolute",
+        left: `${left}px`,
+        top: `${top}px`,
+        width: "min(320px, calc(100% - 0px))",
+        zIndex: 100,
+      })
     }
-  }, [activeTooltip])
+  }, [])
 
-  const handleSpanClick = useCallback(
-    (e: React.MouseEvent, dataKey: string, data: TooltipData, spanEl: HTMLSpanElement) => {
-      e.stopPropagation()
-      if (activeTooltip?.dataKey === dataKey) {
-        // Toggle off if clicking the same span
-        setActiveTooltip(null)
-        activeSpanRef.current = null
-      } else {
-        activeSpanRef.current = spanEl
-        setActiveTooltip({ dataKey, content: data })
+  const handleSpanMouseEnter = useCallback(
+    (dataKey: string, spanEl: HTMLElement) => {
+      // Cancel any pending dismiss
+      if (dismissTimerRef.current) {
+        clearTimeout(dismissTimerRef.current)
+        dismissTimerRef.current = null
       }
+      setActiveDataKey(dataKey)
+      computeTooltipPosition(spanEl)
     },
-    [activeTooltip]
+    [computeTooltipPosition]
   )
+
+  const handleSpanMouseLeave = useCallback(() => {
+    // Small delay so user can move cursor to the tooltip
+    dismissTimerRef.current = setTimeout(() => {
+      setActiveDataKey(null)
+    }, 150)
+  }, [])
+
+  const handleTooltipMouseEnter = useCallback(() => {
+    // Cancel dismiss when cursor enters tooltip
+    if (dismissTimerRef.current) {
+      clearTimeout(dismissTimerRef.current)
+      dismissTimerRef.current = null
+    }
+  }, [])
+
+  const handleTooltipMouseLeave = useCallback(() => {
+    // Dismiss when cursor leaves tooltip
+    dismissTimerRef.current = setTimeout(() => {
+      setActiveDataKey(null)
+    }, 100)
+  }, [])
 
   const handleTranslate = useCallback(() => {
     if (state === "loading") return
     setState("loading")
     setShowHighlights(false)
     setScore(0)
-    setActiveTooltip(null)
-    activeSpanRef.current = null
+    setActiveDataKey(null)
 
     setTimeout(() => {
       setTranslationsLeft((prev) => Math.max(0, prev - 1))
@@ -264,8 +278,7 @@ export function InteractiveDemo() {
     setState("idle")
     setShowHighlights(false)
     setScore(0)
-    setActiveTooltip(null)
-    activeSpanRef.current = null
+    setActiveDataKey(null)
   }, [])
 
   const getHighlightColor = (type: string) => {
@@ -293,65 +306,18 @@ export function InteractiveDemo() {
     const data = tooltipData[dataKey]
     if (!showHighlights || !data) return <>{children}</>
 
-    const isActive = activeTooltip?.dataKey === dataKey
-
     return (
-      <span className="relative inline">
-        <span
-          ref={(el) => { spanRefs.current[dataKey] = el }}
-          data-highlight-key={dataKey}
-          className={`${getHighlightColor(data.type)} px-0.5 rounded cursor-pointer underline underline-offset-2 decoration-2 transition-all duration-500 ${isActive ? "brightness-90 ring-2 ring-[#303030]/20 ring-offset-1" : "hover:brightness-90"}`}
-          onClick={(e) => {
-            const spanEl = spanRefs.current[dataKey]
-            if (spanEl) handleSpanClick(e, dataKey, data, spanEl)
-          }}
-        >
-          {children}
-        </span>
-        {isActive && (
-          <span
-            ref={tooltipRef}
-            className={`absolute left-0 z-[100] ${tooltipPosition === "above" ? "bottom-full mb-2" : "top-full mt-2"}`}
-            style={{ width: "min(320px, calc(100vw - 48px))" }}
-          >
-            <span className="block bg-[#303030] text-white p-4 rounded-xl shadow-2xl border border-white/10">
-              {/* Phrase */}
-              <span className="block text-[10px] uppercase tracking-wider mb-1.5 text-white/30">
-                Phrase Detected
-              </span>
-              <span className="block text-sm font-medium mb-3 text-white/90 leading-snug">
-                &ldquo;{data.phrase}&rdquo;
-              </span>
-
-              {/* Explanation */}
-              <span className="block text-[10px] uppercase tracking-wider mb-1.5 text-white/30">
-                Real Talk
-              </span>
-              <span className="block text-sm mb-3 text-white/70 leading-relaxed">
-                {data.explanation}
-              </span>
-
-              {/* Status */}
-              <span className="flex items-center gap-2 text-xs pt-2 border-t border-white/[0.06]">
-                <span
-                  className={`w-2.5 h-2.5 rounded-full ${
-                    data.type === "green"
-                      ? "bg-green-400"
-                      : data.type === "yellow"
-                      ? "bg-yellow-400"
-                      : data.type === "orange"
-                      ? "bg-orange-400"
-                      : "bg-red-400"
-                  }`}
-                />
-                <span className="text-white/50">{data.label}</span>
-              </span>
-            </span>
-          </span>
-        )}
+      <span
+        className={`${getHighlightColor(data.type)} px-0.5 rounded cursor-help underline underline-offset-2 decoration-2 transition-all duration-500 hover:brightness-90`}
+        onMouseEnter={(e) => handleSpanMouseEnter(dataKey, e.currentTarget)}
+        onMouseLeave={handleSpanMouseLeave}
+      >
+        {children}
       </span>
     )
   }
+
+  const activeTooltipData = activeDataKey ? tooltipData[activeDataKey] : null
 
   return (
     <section
@@ -382,7 +348,6 @@ export function InteractiveDemo() {
         >
           {/* LEFT: LinkedIn Job Card - FULL */}
           <div
-            ref={jobCardRef}
             className={`flex-1 max-w-[800px] bg-white rounded-2xl shadow-sm border border-[#E5E7EB] overflow-visible transition-all duration-300 ${
               state === "loading" ? "animate-pulse" : ""
             }`}
@@ -410,7 +375,7 @@ export function InteractiveDemo() {
             </div>
 
             {/* Job Description - FULL CONTENT */}
-            <div className="p-6 lg:p-8 relative text-sm text-gray-700 leading-relaxed space-y-6">
+            <div ref={jobContentRef} className="p-6 lg:p-8 relative text-sm text-gray-700 leading-relaxed space-y-6">
               {/* Overview Section */}
               <div>
                 <h4 className="text-sm font-semibold text-gray-900 mb-3">
@@ -564,6 +529,50 @@ export function InteractiveDemo() {
                 </ul>
               </div>
 
+              {/* Single tooltip — rendered once, positioned absolutely */}
+              {activeTooltipData && (
+                <div
+                  ref={tooltipRef}
+                  style={tooltipStyle}
+                  onMouseEnter={handleTooltipMouseEnter}
+                  onMouseLeave={handleTooltipMouseLeave}
+                >
+                  <div className="bg-[#303030] text-white p-4 rounded-xl shadow-2xl border border-white/10">
+                    {/* Phrase */}
+                    <div className="text-[10px] uppercase tracking-wider mb-1.5 text-white/30">
+                      Phrase Detected
+                    </div>
+                    <div className="text-sm font-medium mb-3 text-white/90 leading-snug">
+                      &ldquo;{activeTooltipData.phrase}&rdquo;
+                    </div>
+
+                    {/* Explanation */}
+                    <div className="text-[10px] uppercase tracking-wider mb-1.5 text-white/30">
+                      Real Talk
+                    </div>
+                    <div className="text-sm mb-3 text-white/70 leading-relaxed">
+                      {activeTooltipData.explanation}
+                    </div>
+
+                    {/* Status */}
+                    <div className="flex items-center gap-2 text-xs pt-2 border-t border-white/[0.06]">
+                      <div
+                        className={`w-2.5 h-2.5 rounded-full ${
+                          activeTooltipData.type === "green"
+                            ? "bg-green-400"
+                            : activeTooltipData.type === "yellow"
+                            ? "bg-yellow-400"
+                            : activeTooltipData.type === "orange"
+                            ? "bg-orange-400"
+                            : "bg-red-400"
+                        }`}
+                      />
+                      <span className="text-white/50">{activeTooltipData.label}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Loading shimmer overlay */}
               {state === "loading" && (
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer" />
@@ -653,7 +662,7 @@ export function InteractiveDemo() {
                     </div>
 
                     <p className="text-xs text-gray-400 text-center">
-                      Tap highlights for details
+                      Hover over highlights for details
                     </p>
 
                     <button
