@@ -29,7 +29,7 @@ export function Navigation() {
             alt="Plain n' Simple logo"
             className="w-8 h-8 rounded-[22%]"
           />
-          <span className="text-[#303030] font-semibold text-lg tracking-tight hidden sm:block">
+          <span className="text-[#303030] font-serif font-semibold text-lg tracking-tight hidden sm:block">
             Plain n&apos; Simple
           </span>
         </a>
