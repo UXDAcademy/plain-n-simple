@@ -26,14 +26,14 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/og-image.png',
-        width: 1120,
-        height: 1120,
+        width: 1200,
+        height: 630,
         alt: 'Plain n\' Simple app icon',
       },
     ],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Plain n\' Simple: Bullsh*t Job Detector',
     description: 'See what LinkedIn job descriptions really mean before you waste time applying.',
     images: ['/og-image.png'],
