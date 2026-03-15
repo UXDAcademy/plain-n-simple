@@ -95,7 +95,7 @@ export default function ConfirmPage() {
 
           {/* CTA button */}
           <a href="https://www.linkedin.com" className="self-stretch">
-            <div className="self-stretch rounded-xl bg-[#2b7fff] flex items-center justify-center py-[19px] px-[90px] text-base transition-all duration-200 hover:bg-[#1a6fe6] hover:-translate-y-[1px] hover:shadow-[0_4px_12px_rgba(43,127,255,0.4)]">
+            <div className="self-stretch rounded-[10px] bg-[#2b7fff] flex items-center justify-center py-[19px] px-[90px] text-base transition-all duration-200 hover:bg-[#1a6fe6] hover:-translate-y-[1px] hover:shadow-[0_4px_12px_rgba(43,127,255,0.4)]">
               <div className="h-[18px] w-[141px] font-semibold shrink-0 flex items-center justify-center">
                 Return to LinkedIn
               </div>
