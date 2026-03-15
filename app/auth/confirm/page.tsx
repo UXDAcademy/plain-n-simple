@@ -15,55 +15,48 @@ export default function ConfirmPage() {
     if (accessToken || type === 'signup') {
       setStatus('confirmed')
     } else {
-      // Supabase already verified the token before redirecting here
       setStatus('confirmed')
     }
   }, [])
 
   if (status === 'confirming') {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background px-5">
-        <p className="text-lg text-muted-foreground">Verifying your email...</p>
+      <div className="flex min-h-screen items-center justify-center bg-[#FFF9F2] px-5">
+        <p className="text-lg text-[#86868b]">Verifying your email...</p>
       </div>
     )
   }
 
   if (status === 'error') {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-background px-5">
-        <h1 className="mb-4 font-serif text-4xl text-foreground md:text-5xl">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#FFF9F2] px-5">
+        <h1 className="mb-4 font-serif text-5xl text-[#303030] md:text-[96px]">
           Something went wrong
         </h1>
-        <p className="mb-8 text-center text-muted-foreground">
+        <p className="mb-8 text-center text-[#86868b]">
           We couldn&apos;t verify your email. The link may have expired.
         </p>
         <a
           href="https://www.linkedin.com/jobs/"
-          className="rounded-xl bg-[#10B981] px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-[#10B981]/90"
+          className="rounded-xl bg-[#2b7fff] px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-[#2b7fff]/90"
         >
           Go to LinkedIn
-        </a>
-        <a
-          href="https://www.useplainandsimple.app"
-          className="mt-8 text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
-        >
-          www.useplainandsimple.app
         </a>
       </div>
     )
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background px-5">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#FFF9F2] px-5">
       {/* Title */}
-      <h1 className="mb-10 font-serif text-4xl text-foreground md:text-5xl">
+      <h1 className="mb-12 font-serif text-5xl text-[#303030] md:text-[96px] md:leading-tight">
         Your Account is Ready!
       </h1>
 
-      {/* Dark notification card */}
-      <div className="w-full max-w-[320px] rounded-2xl bg-[#1A1A2E] px-8 pb-8 pt-7 text-center shadow-xl">
+      {/* Dark card — everything except footer is inside */}
+      <div className="w-full max-w-[360px] rounded-2xl bg-[#303030] px-5 pb-5 pt-6">
         {/* App header */}
-        <div className="mb-5 flex items-center justify-center gap-2">
+        <div className="mb-4 flex items-center justify-center gap-2">
           <Image
             src="/app_icon.png"
             alt="Plain n' Simple"
@@ -71,53 +64,50 @@ export default function ConfirmPage() {
             height={24}
             className="rounded-md"
           />
-          <span className="text-sm font-medium text-white/90">
+          <span className="text-xl font-semibold text-white">
             Plain n&apos; Simple
           </span>
         </div>
 
         {/* Divider */}
-        <div className="mx-auto mb-5 h-px w-full bg-white/10" />
+        <div className="mb-5 h-px w-full bg-[#454545]" />
 
-        {/* Check + percentage */}
-        <div className="mb-1 flex items-center justify-center gap-3">
-          <span className="text-4xl">✅</span>
-          <span className="text-5xl font-bold text-[#10B981]">100%</span>
+        {/* Status container — inner card */}
+        <div className="mb-5 rounded-2xl border-[0.5px] border-[#187a4a] bg-[#383838] px-5 py-5">
+          {/* Check + percentage */}
+          <div className="mb-2 flex items-center justify-between px-2">
+            <span className="text-5xl">✅</span>
+            <span className="text-4xl font-semibold text-[#05df73]">100%</span>
+          </div>
+
+          {/* Status */}
+          <p className="mb-2 text-center text-[28px] font-semibold text-[#05df73]">
+            Email Confirmed
+          </p>
+
+          {/* Subtext */}
+          <p className="text-center text-sm text-[#d1d5dc]">
+            Return to LinkedIn and sign in
+          </p>
         </div>
 
-        {/* Status */}
-        <p className="mb-2 text-lg font-semibold text-[#10B981]">
-          Email Confirmed
+        {/* Instruction */}
+        <p className="mb-4 text-center text-xs text-[#9aa1af]">
+          Open Plain n&apos; Simple, select a job and translate.
         </p>
 
-        {/* Subtext */}
-        <p className="text-sm text-white/50">
-          Return to LinkedIn and sign in
-        </p>
+        {/* CTA button */}
+        <a href="https://www.linkedin.com">
+          <div className="rounded-xl bg-[#2b7fff] py-4 text-center text-base font-semibold text-white transition-colors hover:bg-[#2b7fff]/90">
+            Return to LinkedIn
+          </div>
+        </a>
       </div>
 
-      {/* Instruction */}
-      <p className="mt-6 text-center text-sm text-muted-foreground">
-        Open Plain n&apos; Simple, select a job and translate.
-      </p>
-
-      {/* CTA button */}
-      <a
-        href="https://www.linkedin.com"
-        className="mt-4 w-full max-w-[320px]"
-      >
-        <div className="rounded-xl bg-[#10B981] py-4 text-center text-base font-semibold text-white transition-colors hover:bg-[#10B981]/90">
-          Return to LinkedIn
-        </div>
-      </a>
-
-      {/* Footer */}
-      <a
-        href="https://www.useplainandsimple.app"
-        className="mt-8 text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
-      >
+      {/* Footer — outside the card */}
+      <p className="mt-10 text-lg font-medium text-[#86868b]">
         www.useplainandsimple.app
-      </a>
+      </p>
     </div>
   )
 }
