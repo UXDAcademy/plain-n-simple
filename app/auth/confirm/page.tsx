@@ -52,19 +52,15 @@ export default function ConfirmPage() {
         Your Account is Ready!
       </h1>
 
-      {/* Overlay — the dark card */}
-      <div className="relative w-[360px] h-[406px] text-center text-[48px] text-white">
-        {/* Notification background */}
-        <div className="absolute inset-0 rounded-2xl bg-[#303030]" />
-
+      {/* Overlay — single flexbox card, no absolute positioning */}
+      <div className="w-full max-w-[360px] rounded-2xl bg-[#303030] flex flex-col items-start pb-6 gap-5 text-left text-xl text-white font-[Inter]">
         {/* Header */}
-        <div className="absolute top-0 left-0 right-0 rounded-t-2xl border-b border-[#454545] flex items-center px-5 pt-5 pb-6 gap-3 text-left text-xl">
+        <div className="self-stretch border-b border-[#454545] flex items-center px-5 pt-5 pb-6 gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/ampersand-icon.svg"
             alt=""
             className="h-6 w-6 rounded"
-            style={{ filter: 'invert(1)' }}
           />
           <div className="w-[284px] font-semibold shrink-0">
             Plain n&apos; Simple
@@ -72,7 +68,7 @@ export default function ConfirmPage() {
         </div>
 
         {/* Content */}
-        <div className="absolute top-[88px] left-5 w-[320px] flex flex-col items-start gap-6">
+        <div className="self-stretch flex flex-col items-start px-5 gap-6 text-center text-[48px]">
           {/* Status frame */}
           <div className="self-stretch rounded-2xl bg-[#383838] border-[0.5px] border-[#187a4a] flex flex-col items-start py-6 gap-4 text-left">
             {/* Checkmark + percentage row */}
@@ -108,10 +104,13 @@ export default function ConfirmPage() {
         </div>
       </div>
 
-      {/* Footer */}
-      <p className="mt-10 text-lg font-medium text-[#86868b]">
+      {/* Footer link */}
+      <a
+        href="https://www.useplainandsimple.app"
+        className="mt-10 text-lg font-medium text-[#86868b] underline hover:text-[#303030] transition-colors"
+      >
         www.useplainandsimple.app
-      </p>
+      </a>
     </div>
   )
 }
