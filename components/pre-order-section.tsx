@@ -38,9 +38,9 @@ const paidFeatures: FeatureItem[] = [
   { label: "AI-powered jargon detection" },
   { label: "Color-coded analysis" },
   { label: "LinkedIn integration" },
-  { label: "Resume-to-Job match", comingSoon: true },
-  { label: "Ghost job detection", comingSoon: true },
-  { label: "Compare job analyses", comingSoon: true },
+  { label: "Resume-to-Job match" },
+  { label: "Ghost job detection" },
+  { label: "Compare job analyses" },
 ]
 
 export function PreOrderSection() {
@@ -71,12 +71,6 @@ export function PreOrderSection() {
             isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F59E0B]/10 border border-[#F59E0B]/20 mb-6">
-            <Zap className="w-3.5 h-3.5 text-[#F59E0B]" />
-            <span className="text-sm font-medium text-[#92400E]">
-              Early Access Pricing
-            </span>
-          </div>
           <h2 className="text-4xl sm:text-5xl font-serif text-[#303030] mb-4">
             Choose your plan
           </h2>
@@ -171,13 +165,13 @@ export function PreOrderSection() {
                   Annual
                 </h3>
                 <span className="text-[10px] font-semibold text-[#92400E] bg-[#F59E0B]/10 px-2.5 py-1 rounded-full uppercase tracking-wide border border-[#F59E0B]/20">
-                  Pre-Order Discount
+                  Save $60 Yearly
                 </span>
               </div>
 
               <div className="mb-1">
                 <span className="text-5xl font-bold text-[#303030] tracking-tight">
-                  $6.25
+                  $9.99
                 </span>
                 <span className="text-[#86868b] ml-1">/mo</span>
               </div>

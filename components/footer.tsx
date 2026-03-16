@@ -199,13 +199,11 @@ export function Footer() {
       {/* CTA section */}
       <div className="pt-10 md:pt-14 pb-20 md:pb-24 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-serif text-[#303030] mb-4">
-            Stop applying blindly
+          <h2 className="text-4xl sm:text-5xl font-serif text-[#303030] mb-4">
+            The Rotten Tomatoes for Jobs
           </h2>
           <p className="text-lg text-[#86868b] mb-16 max-w-lg mx-auto leading-relaxed">
             Know what you&apos;re getting into before you waste your time.
-            <br />
-            Pre-order today and be the first to know when we launch.
           </p>
 
           {/* Cycling popup */}
