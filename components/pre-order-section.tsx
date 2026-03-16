@@ -193,10 +193,7 @@ export function PreOrderSection() {
                 rel="noopener noreferrer"
                 className="block w-full text-center py-4 rounded-lg text-sm font-semibold bg-blue-500 text-white hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-200 active:scale-[0.98]"
               >
-                Pre-Order for $75{" "}
-                <span className="text-white/40 line-through font-normal ml-1">
-                  $120
-                </span>
+                Purchase Now for $120
               </a>
               <p className="text-xs text-[#86868b] text-center mt-3">
                 Secure checkout via Stripe.
