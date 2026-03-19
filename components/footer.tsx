@@ -180,12 +180,12 @@ function CyclingPopup() {
 
           {/* CTA Button */}
           <a
-            href="https://buy.stripe.com/00w14n1aAecK5jobCnfjG05"
+            href="https://chromewebstore.google.com/detail/plain-n-simple/hcijkgnjmelopibpkpnoenjdaanhblma"
             target="_blank"
             rel="noopener noreferrer"
             className="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/20 active:scale-[0.98] text-base"
           >
-            Pre-Order for $75
+            Download Extension
           </a>
         </div>
       </div>

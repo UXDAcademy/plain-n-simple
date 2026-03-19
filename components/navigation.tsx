@@ -52,16 +52,18 @@ export function Navigation() {
             href="#pricing"
             className="text-[#86868b] hover:text-[#303030] text-sm transition-colors duration-200"
           >
-            Pre-Order
+            Plan Options
           </a>
         </div>
 
         {/* CTA */}
         <a
-          href="#pricing"
+          href="https://chromewebstore.google.com/detail/plain-n-simple/hcijkgnjmelopibpkpnoenjdaanhblma"
+          target="_blank"
+          rel="noopener noreferrer"
           className="bg-blue-500 text-white px-5 py-2 rounded-[8px] text-sm font-medium hover:bg-blue-600 hover:shadow-blue-500/20 transition-all duration-200 active:scale-[0.97]"
         >
-          Get Early Access
+          Download Chrome Extension
         </a>
       </nav>
     </header>

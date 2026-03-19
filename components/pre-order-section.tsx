@@ -104,12 +104,12 @@ export function PreOrderSection() {
             </div>
 
             <a
-              href="https://chrome.google.com/webstore"
+              href="https://chromewebstore.google.com/detail/plain-n-simple/hcijkgnjmelopibpkpnoenjdaanhblma"
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full text-center py-4 rounded-lg text-sm font-semibold border border-[#E5E7EB] text-[#303030] hover:bg-[#F3F4F6] hover:border-[#D1D5DB] transition-all duration-200 active:scale-[0.98]"
             >
-              Coming Soon
+              Get Started
             </a>
           </div>
 
@@ -140,14 +140,13 @@ export function PreOrderSection() {
             </div>
 
             <a
-              href="#"
+              href="https://chromewebstore.google.com/detail/plain-n-simple/hcijkgnjmelopibpkpnoenjdaanhblma"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block w-full text-center py-4 rounded-lg text-sm font-semibold border border-[#E5E7EB] text-[#303030] hover:bg-[#F3F4F6] hover:border-[#D1D5DB] transition-all duration-200 active:scale-[0.98]"
             >
-              Coming Soon
+              Get Started
             </a>
-            <p className="text-xs text-[#86868b] text-center mt-3">
-              Secure checkout via Stripe
-            </p>
           </div>
 
           {/* ─── YEARLY PREMIUM (BEAM BORDER) ─── */}
@@ -188,19 +187,13 @@ export function PreOrderSection() {
               </div>
 
               <a
-                href="https://buy.stripe.com/00w14n1aAecK5jobCnfjG05"
+                href="https://chromewebstore.google.com/detail/plain-n-simple/hcijkgnjmelopibpkpnoenjdaanhblma"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-center py-4 rounded-lg text-sm font-semibold bg-blue-500 text-white hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-200 active:scale-[0.98]"
               >
-                Pre-Order for $75{" "}
-                <span className="text-white/40 line-through font-normal ml-1">
-                  $120
-                </span>
+                Get Started
               </a>
-              <p className="text-xs text-[#86868b] text-center mt-3">
-                Secure checkout via Stripe.
-              </p>
             </div>
           </div>
         </div>
