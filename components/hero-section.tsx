@@ -54,12 +54,12 @@ export function HeroSection() {
           }`}
         >
           <a
-            href="https://buy.stripe.com/00w14n1aAecK5jobCnfjG05"
+            href="https://chromewebstore.google.com/detail/plain-n-simple/hcijkgnjmelopibpkpnoenjdaanhblma"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-blue-500 text-white px-8 py-3.5 rounded-lg text-base font-medium hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-200 active:scale-[0.97]"
           >
-            Pre-Order Today
+            Download Chrome Extension
           </a>
           <a
             href="#demo"

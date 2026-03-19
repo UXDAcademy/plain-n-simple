@@ -63,7 +63,7 @@ export function Navigation() {
           rel="noopener noreferrer"
           className="bg-blue-500 text-white px-5 py-2 rounded-[8px] text-sm font-medium hover:bg-blue-600 hover:shadow-blue-500/20 transition-all duration-200 active:scale-[0.97]"
         >
-          Download Chrome Extension
+          Download
         </a>
       </nav>
     </header>
