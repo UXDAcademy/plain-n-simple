@@ -19,7 +19,7 @@
 
 **Reality Check:** $60K/month in 6 months is aggressive for a Chrome extension with a cold-start audience. This plan is designed to maximize the probability, but achieving this likely requires at least one viral moment or a highly successful paid acquisition channel. The plan is structured so Tier 1 ($0) builds the organic engine, Tier 2 ($500) accelerates it, and Tier 3 ($2K) adds paid scale. A more conservative target would be $15-25K/month at 6 months with $60K achievable by month 9-12.
 
-**Confirmed Pricing:** $15/mo (monthly) and $9.99/mo (annual, billed yearly). The $4.99/mo pricing in `pricing-section.tsx` should be updated to match `pre-order-section.tsx`.
+**Confirmed Pricing:** $15/mo (monthly) and $9.99/mo (annual, billed yearly). Defined in `pre-order-section.tsx`. Old `pricing-section.tsx` with $4.99 pricing has been removed.
 
 **Available Tools:** Typefully (X scheduling), X/Twitter (@uxdacademy), LinkedIn company page, Chrome Web Store listing.
 
@@ -310,17 +310,10 @@ Installs mean nothing without conversion to paid. These apply to all tiers:
 
 ### Week 1: Landing Page Fixes (Code Changes)
 
-- [ ] **Fix pricing inconsistency** — `components/pricing-section.tsx` shows $4.99/mo but `components/pre-order-section.tsx` shows $15/mo. Update `pricing-section.tsx` to match the confirmed $15/mo monthly and $9.99/mo annual pricing.
-- [ ] **Implement `components/faq-section.tsx`** — Currently returns `null`. Add 6-8 FAQs addressing:
-  - "How does it work?" (AI analyzes job posting language for jargon, vagueness, red flags)
-  - "Is it free?" (Yes, 5 analyses/day free forever)
-  - "What data do you collect?" (Privacy-first, no data sent to servers on free tier)
-  - "Does it work outside LinkedIn?" (LinkedIn only for now)
-  - "What do the colors mean?" (Green=genuine, Yellow=minor jargon, Orange=vague, Red=red flag)
-  - "What is ghost job detection?" (Premium feature: identifies postings that aren't actively hiring)
-  - "Can I cancel anytime?" (Yes, no lock-in)
-- [ ] **Implement `components/final-cta.tsx`** — Currently returns `null`. Add a strong closing CTA section with headline like "Stop wasting time on BS job postings" + download button + "Join 10,000+ job seekers" social proof counter
-- [ ] **Add email capture to `app/page.tsx`** — Insert an email signup component between the demo and pricing sections. Offer: "Get the Weekly Honesty Report — the 5 worst job postings, decoded." Connect to Supabase or a free email service (Beehiiv free tier)
+- [x] **Fix pricing inconsistency** — Removed unused `pricing-section.tsx` with old $4.99 pricing. App uses `pre-order-section.tsx` with correct $15/mo and $9.99/mo pricing.
+- [x] **Implement `components/faq-section.tsx`** — Added 7 FAQs with accordion UI covering: how it works, pricing, privacy, platform support, color meanings, ghost job detection, and cancellation.
+- [x] **Add newsletter/email capture** — Created `components/newsletter-section.tsx` ("The Honesty Report") with email form, placed after FAQ section in `app/page.tsx`. **TODO:** Connect form submission to email service (Beehiiv, ConvertKit, or Supabase).
+- [ ] **Implement `components/final-cta.tsx`** — Currently returns `null`. Add a strong closing CTA section with headline like "Stop wasting time on BS job postings" + download button + social proof counter
 - [ ] **Update `app/layout.tsx` SEO metadata** — Expand keywords to include high-intent search terms: "fake job posting detector," "ghost job checker," "LinkedIn job scam," "job posting red flags," "is this job posting real"
 
 ### Week 1: Content Preparation (No Code)
@@ -370,22 +363,22 @@ Installs mean nothing without conversion to paid. These apply to all tiers:
 
 ## Files to Modify (When Ready to Implement)
 
-| File | Change | Priority |
-|------|--------|----------|
-| `components/pricing-section.tsx` | Update pricing from $4.99/mo to $15/mo to match pre-order-section | **P0** |
-| `components/faq-section.tsx` | Implement FAQ section (currently returns null) | **P0** |
-| `components/final-cta.tsx` | Implement closing CTA section (currently returns null) | **P1** |
-| `app/page.tsx` | Add email capture component between demo and pricing sections | **P1** |
-| `app/layout.tsx` | Expand SEO keywords in metadata | **P2** |
-| New: `MARKETING-DISTRIBUTION-PLAN.md` | Commit this plan to repo root | **P0** |
+| File | Change | Status |
+|------|--------|--------|
+| ~~`components/pricing-section.tsx`~~ | Removed — old $4.99 pricing, unused by app | **Done** |
+| `components/faq-section.tsx` | Implemented 7-question accordion FAQ section | **Done** |
+| `components/newsletter-section.tsx` | Created "The Honesty Report" email capture section | **Done** |
+| `app/page.tsx` | Added FAQSection + NewsletterSection between pricing and footer | **Done** |
+| `components/final-cta.tsx` | Implement closing CTA section (currently returns null) | **TODO** |
+| `app/layout.tsx` | Expand SEO keywords in metadata | **TODO** |
+| `components/newsletter-section.tsx` | Connect form to email service (Beehiiv/ConvertKit/Supabase) | **TODO** |
 
 ---
 
-## Verification (Post-Implementation)
+## Remaining Work
 
-1. Confirm landing page renders correctly with new FAQ and CTA sections (`npm run dev`)
-2. Verify pricing is consistent across `pricing-section.tsx` and `pre-order-section.tsx`
-3. Test email capture flow end-to-end (submit → confirmation)
-4. Run `npm run build` to ensure no build errors
-5. Check Open Graph preview with a sharing debugger tool
-6. Confirm Typefully is connected and first week of content is queued
+1. Connect newsletter form to an email service backend
+2. Implement `final-cta.tsx` with a strong closing CTA
+3. Update SEO metadata in `app/layout.tsx`
+4. Set up automated newsletter workflow (agent or n8n)
+5. Create content assets for X/LinkedIn distribution
