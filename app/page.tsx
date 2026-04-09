@@ -4,6 +4,8 @@ import { InteractiveDemo } from "@/components/interactive-demo"
 import { BentoGrid } from "@/components/bento-grid"
 import { VideoSection } from "@/components/video-section"
 import { PreOrderSection } from "@/components/pre-order-section"
+import { FAQSection } from "@/components/faq-section"
+import { NewsletterSection } from "@/components/newsletter-section"
 import { Footer } from "@/components/footer"
 
 export default function Home() {
@@ -15,6 +17,8 @@ export default function Home() {
       <BentoGrid />
       <VideoSection />
       <PreOrderSection />
+      <FAQSection />
+      <NewsletterSection />
       <Footer />
     </main>
   )
